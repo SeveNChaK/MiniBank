@@ -22,8 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .sessionManagement().maximumSessions(1)
-                .expiredUrl("/")
-                .and().invalidSessionUrl("/")
+                .expiredUrl("/ex")
+                .and().invalidSessionUrl("/inv")
                 .sessionFixation().newSession();
 
         httpSecurity
@@ -32,6 +32,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/status", "/signIn", "/signUp").permitAll()
                 //Все остальные страницы требуют аутентификации
                 .anyRequest().authenticated();
+
+        httpSecurity
+                .formLogin()
+                .usernameParameter("uniqueName")
+                .passwordParameter("password")
+                .loginProcessingUrl("/signIn")
+                .successForwardUrl("/status")
+                .defaultSuccessUrl("/status")
+                .permitAll();
     }
 
     @Override
