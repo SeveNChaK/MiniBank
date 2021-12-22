@@ -29,7 +29,7 @@ public class BankController {
         return "I am OK!";
     }
 
-    @GetMapping("/main")
+    @GetMapping("/api/main")
     public ResponseEntity<?> mainPage(@Nullable Principal principal) {
         if (principal == null) {
             return new ResponseEntity<>("Need login.", HttpStatus.UNAUTHORIZED);
@@ -37,7 +37,7 @@ public class BankController {
         return new ResponseEntity<>("Access.", HttpStatus.OK);
     }
 
-    @GetMapping("/transactions")
+    @GetMapping("/api/transactions")
     public ResponseEntity<?> allTransaction(@Nullable Principal principal) {
         if (principal == null) {
             return new ResponseEntity<>("Need login.", HttpStatus.UNAUTHORIZED);
@@ -45,7 +45,7 @@ public class BankController {
         return new ResponseEntity<>(paymentService.getAllPayments(principal.getName()), HttpStatus.OK);
     }
 
-    @PostMapping("/addMoney")
+    @PostMapping("/api/addMoney")
     public ResponseEntity<?> addMoney(
             @Nullable Principal principal,
             @RequestParam long amount
@@ -62,7 +62,7 @@ public class BankController {
         }
     }
 
-    @PostMapping("/getMoney")
+    @PostMapping("/api/getMoney")
     public ResponseEntity<?> getMoney(
             @Nullable Principal principal,
             @RequestParam long amount
@@ -81,7 +81,7 @@ public class BankController {
         }
     }
 
-    @PostMapping("/send")
+    @PostMapping("/api/send")
     public ResponseEntity<?> sendMoney(
             @Nullable Principal principal,
             @RequestParam String targetName,

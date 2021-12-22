@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, String> {
     Optional<User> findByUniqueName(@NonNull String uniqueName);
+    Optional<User> findByToken(@NonNull String token);
 }

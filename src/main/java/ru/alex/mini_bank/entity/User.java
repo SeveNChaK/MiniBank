@@ -3,15 +3,12 @@ package ru.alex.mini_bank.entity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 
 @Entity
-@Table(name = "t_user")
+@Table(name = "t_user", uniqueConstraints = @UniqueConstraint(columnNames = {"token"}))
 public class User implements UserDetails {
 
     @Transient
@@ -20,6 +17,8 @@ public class User implements UserDetails {
     @Id
     private String uniqueName;
     private String password;
+    private String token;
+    private boolean isSignedOut = true;
     private long balance = 0;
 
     public User() {
@@ -80,5 +79,21 @@ public class User implements UserDetails {
 
     public void setBalance(long balance) {
         this.balance = balance;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public boolean isSignedOut() {
+        return isSignedOut;
+    }
+
+    public void setSignedOut(boolean signedOut) {
+        isSignedOut = signedOut;
     }
 }
